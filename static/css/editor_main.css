@@ -1,0 +1,311 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: white;
+	font-size: 12pt;
+	width: 900px;
+	margin: 0 auto;
+	padding: 0;
+	line-height: 20pt;
+}
+
+div {
+	padding: 0px;
+	margin: 0px;
+}
+
+a {
+	color: lightblue;
+	text-decoration: none;
+}
+
+a.content {
+	color: #00185E;
+}
+
+hr {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+
+.gradient {
+	background: linear-gradient(#001F38, rgb(55, 98, 122));
+	background: -moz-linear-gradient(#001F38, rgb(55, 98, 122));
+	background: -webkit-linear-gradient(#001F38, rgb(55, 98, 122));
+	background: -ms-linear-gradient(#001F38, rgb(55, 98, 122));
+	background: -o-linear-gradient(#001F38, rgb(55, 98, 122));
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border-bottom-left-radius: 7px;
+}
+
+header {
+	min-height: 60px;
+	color: white;
+	margin: 2px;
+	padding: 13px;
+}
+
+footer {
+	text-align: center;
+	clear: both;
+	color: white;
+	margin: 2px;
+	padding: 30px;
+	font-size: 11pt;
+}
+
+nav {
+	width: 160px;
+	float: left;
+	line-height: 25px;
+	margin: 2px;
+	padding: 14px;
+}
+
+.center {
+	background-color: #e8eeff;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border-bottom-left-radius: 7px;
+	width: 674px;
+	margin: 3px;
+	padding: 14px;
+	min-height: 500px;
+}
+
+.amin-icon {
+	vertical-align: middle;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.info-icon {
+	vertical-align: middle;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 18px;
+	cursor: pointer;
+}
+
+img:hover {
+	opacity: 0.8;
+}
+
+.speed {
+	-webkit-transition: all 0.8s ease;
+	-moz-transition: all 0.8s ease;
+	-o-transition: all 0.8s ease;
+	-ms-transition: all 0.8s ease;
+	transition: all 0.8s ease;
+}
+
+.rotate {
+	-webkit-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	transform: rotate(360deg);
+}
+
+li {
+	padding: 5px;
+	line-height: 30px;
+	font-size: 12pt;
+}
+
+.icon {
+	padding-top: 9px;
+	padding-buttom: 0px;
+	cursor: pointer;
+	width: 106px;
+	height: 106px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+h1 {
+	margin-bottom: 20px;
+	margin-top: 20px;
+	font-size: 20pt;
+}
+
+.mypre {
+	direction: ltr;
+	text-align: left;
+	font-family: "Courier New", Courier, mono, serif;
+	font-size: 10pt;
+	background-color: #BED9DD;
+	padding: 8px;
+	color: black;
+	border-radius: 5px;
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word;
+}
+
+p {
+	font-size: 14pt;
+	line-height: 30px;
+}
+
+li {
+	font-size: 14pt;
+	line-height: 30px;
+}
+
+.collapse {
+	background-image: url('/statics/img/collapse.png');
+	background-repeat: no-repeat;
+	background-position: 0px center;
+	font-size: 14pt;
+}
+
+.expand {
+	background-image: url('/statics/img/expand.png');
+	background-repeat: no-repeat;
+	background-position: 0px center;
+	font-size: 14pt;
+}
+
+.oruji-ul {
+	padding-left: 30px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.oruji-li {
+	padding-bottom: 5px;
+	padding-left: 50px;
+}
+
+.simple {
+	padding-bottom: 6px;
+	padding-left: 10px;
+}
+
+.banner {
+	color: white;
+	font-weight: bold;
+	font-size: 25pt;
+}
+
+.change-lang {
+	margin-top: -40px;
+	background-color: #e8eeff;
+	color: #000;
+	border-radius: 3px;
+	padding-right: 7px;
+	padding-left: 7px;
+	font-size: 10pt;
+}
+
+#skillsToggle {
+	padding: 0px 50px 0px 0px;
+	direction: ltr;
+	text-align: left;
+	padding-bottom: 20px;
+}
+
+#educationsToggle {
+	padding-bottom: 20px;
+}
+
+#personalToggle {
+	padding-top: 9px;
+}
+
+.titr-link {
+	background-color: #e8eeff;
+	border-radius: 5px;
+	text-align: center;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+.last-line {
+	margin-bottom: 10px;
+}
+
+.index {
+	padding: 10px;
+	font-size: 14pt;
+}
+
+.index-style {
+	background-color: #BED9DD;
+	border-radius: 4px;
+	padding: 10px;
+	font-size: 14pt;
+}
+
+#aminToggle {
+	white-space: nowrap;
+}
+
+.myName {
+	margin-bottom: 8px;
+	margin-top: 0px
+}
+
+.myBr {
+	clear: both;
+}
+
+.leftm25 {
+	margin-left: 25px;
+}
+
+.rightm25 {
+	margin-right: 25px;
+}
+
+.rightp50 {
+	padding-right: 50px;
+}
+
+.myEmail {
+	margin-bottom: -10px;
+}
+
+.myEmailfa {
+	margin-right: -5px;
+	margin-bottom: -9px;
+}
+
+.rastChin {
+	direction: rtl;
+}
+
+.myTitle {
+	margin-bottom: -10px;
+}
+
+.skillsLi {
+	font-size: 12pt;
+}
+
+.padb20 {
+	padding-bottom: 20px;
+}
+
+.myName {
+	font-size: 20pt;
+}
+
+.mySemat {
+	font-size: 13pt;
+}
+
+.myH3 {
+	font-size: 12pt;
+}

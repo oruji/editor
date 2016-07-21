@@ -1,0 +1,63 @@
+@font-face {
+	font-family: "otitr";
+	src: url("../font/BTitrBd.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "onazanin";
+	src: url("../font/B Nazanin.ttf") format("truetype");
+}
+
+body {
+	font-family: onazanin, serif, tahoma;
+	text-align: right;
+}
+
+footer {
+	font-family: serif, tahoma;
+	font-size: 10pt
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: otitr, serif, tahoma;
+}
+
+.icon {
+	float: right;
+	padding-left: 10px;
+}
+
+.center {
+	float: right;
+}
+
+.change-lang {
+	float: left;
+}
+
+.myEmail {
+	margin-right: -5px;
+}
+
+#personalToggle {
+	float: right;
+}
+
+#aminToggle {
+	text-align: left;
+}
+
+.engNumber {
+	font-family: serif, tahoma;
+}
+
+.leftInline {
+	direction: ltr;
+	font-family: serif, tahoma;
+}
+
+.leftBlock {
+	direction: ltr;
+	font-family: serif, tahoma;
+	text-align: left;
+}
