@@ -309,3 +309,10 @@ li {
 .myH3 {
 	font-size: 12pt;
 }
+
+textarea {
+	width: 680px;
+	height: 150px;
+	font-size: 14pt;
+	font-family: onazanin, cursive, tahoma;
+}

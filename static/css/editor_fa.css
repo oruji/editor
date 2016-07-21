@@ -9,17 +9,17 @@
 }
 
 body {
-	font-family: onazanin, serif, tahoma;
+	font-family: onazanin, cursive, tahoma;
 	text-align: right;
 }
 
 footer {
-	font-family: serif, tahoma;
+	font-family: cursive, tahoma;
 	font-size: 10pt
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: otitr, serif, tahoma;
+	font-family: otitr, cursive, tahoma;
 }
 
 .icon {
@@ -48,16 +48,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .engNumber {
-	font-family: serif, tahoma;
+	font-family: cursive, tahoma;
 }
 
 .leftInline {
 	direction: ltr;
-	font-family: serif, tahoma;
+	font-family: cursive, tahoma;
 }
 
 .leftBlock {
 	direction: ltr;
-	font-family: serif, tahoma;
+	font-family: cursive, tahoma;
 	text-align: left;
 }
