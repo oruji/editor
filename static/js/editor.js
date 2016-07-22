@@ -6,7 +6,7 @@ $(document).ready(
 			var myB = $("<button id=\"myB\">save</button>");
 
 			// click on p
-			$("p").click(function() {
+			$("p, h1, h2, h3").click(function() {
 				myP = $(this);
 
 				if ($("#myTextArea").length)
