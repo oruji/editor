@@ -5,11 +5,21 @@ $(document).ready(function() {
 	var myB = $("<button id=\"myB\">save</button>");
 
 	// click on p
-	myP.click(function() {
-		myText.show();
-		myB.show();
-		$("body").append(myText);
-		$("body").append(myB);
+	$("p").click(function() {
+		myP = $(this);
+
+		if ($("#myTextArea").length)
+			myText.show();
+
+		else
+			$("body").append(myText);
+
+		if ($("#myB").length)
+			myB.show();
+
+		else
+			$("body").append(myB);
+
 		myText.val(myEncode(myP.html()));
 	});
 
