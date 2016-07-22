@@ -9,17 +9,22 @@ $(document).ready(
 			$("p, h1, h2, h3").click(function() {
 				myP = $(this);
 
-				if ($("#myTextArea").length)
-					myText.show();
+				myB.show();
+				myText.show();
+				myP.after(myText);
+				myP.after(myB);
 
-				else
-					$("body").append(myText);
-
-				if ($("#myB").length)
-					myB.show();
-
-				else
-					$("body").append(myB);
+//				if ($("#myTextArea").length)
+//					myText.show();
+//
+//				else
+//					myP.after(myText);
+//
+//				if ($("#myB").length)
+//					myB.show();
+//
+//				else
+//					myP.after(myB);
 
 				myText.val(myEncode(myP.html()));
 			});
@@ -29,7 +34,8 @@ $(document).ready(
 				myP.html(myDecode(myText.val()));
 				var myStr = "";
 
-				$("p").each(
+				// add all tags to cookie
+				$("p, h1, h2, h3").each(
 						function(i, obj) {
 							myStr = myStr + "<" + obj.nodeName + ">"
 									+ obj.innerHTML + "</" + obj.nodeName
