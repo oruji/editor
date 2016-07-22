@@ -1,37 +1,28 @@
 $(document).ready(
 		function() {
-			var myP = $("#myP");
+			var currentElement = $("#myP");
 			var myBC = $("#myBC");
 			var myText = $("<textarea id=\"myTextArea\"></textarea>");
-			var myB = $("<button id=\"myB\">save</button>");
+			var saveButton = $("<button id=\"saveButton\">save</button>");
+			var addButton = $("<button id=\"addButton\">add</button>");
 
 			// click on p
-			$("p, h1, h2, h3").click(function() {
-				myP = $(this);
+			$(document).on("click", "p, h1, h2, h3", function() {
+				currentElement = $(this);
 
-				myB.show();
+				saveButton.show();
 				myText.show();
-				myP.after(myText);
-				myP.after(myB);
+				addButton.show();
+				currentElement.after(myText);
+				currentElement.after(saveButton);
+				currentElement.after(addButton);
 
-//				if ($("#myTextArea").length)
-//					myText.show();
-//
-//				else
-//					myP.after(myText);
-//
-//				if ($("#myB").length)
-//					myB.show();
-//
-//				else
-//					myP.after(myB);
-
-				myText.val(myEncode(myP.html()));
+				myText.val(myEncode(currentElement.html()));
 			});
 
 			// save changes
-			myB.click(function() {
-				myP.html(myDecode(myText.val()));
+			saveButton.click(function() {
+				currentElement.html(myDecode(myText.val()));
 				var myStr = "";
 
 				// add all tags to cookie
@@ -44,7 +35,12 @@ $(document).ready(
 
 				setCookie("aminEditor", myStr, 30);
 				myText.hide();
-				myB.hide();
+				saveButton.hide();
+			});
+
+			addButton.click(function() {
+				var newElement = $("<p>new Element!</p>");
+				currentElement.after(newElement);
 			});
 
 			myBC.click(function() {
