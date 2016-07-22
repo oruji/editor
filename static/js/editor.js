@@ -26,13 +26,17 @@ $(document).ready(function() {
 	// save changes
 	myB.click(function() {
 		myP.html(myDecode(myText.val()));
-		setCookie("aminEditor", encodeURIComponent(myP.html()), 30);
+		var myStr = "";
+		$("p").each(function(i, obj) {
+			myStr = myStr + obj.innerHTML;
+		});
+		setCookie("aminEditor", myStr, 30);
 		myText.hide();
 		myB.hide();
 	});
 
 	myBC.click(function() {
-		alert(decodeURIComponent(getCookie("aminEditor")));
+		alert(getCookie("aminEditor"));
 	});
 });
 
@@ -50,7 +54,7 @@ function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toUTCString();
-	document.cookie = cname + "=" + cvalue + "; " + expires;
+	document.cookie = cname + "=" + encodeURIComponent(cvalue) + "; " + expires;
 }
 
 function getCookie(cname) {
@@ -62,7 +66,7 @@ function getCookie(cname) {
 			c = c.substring(1);
 		}
 		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
+			return decodeURIComponent(c.substring(name.length, c.length));
 		}
 	}
 	return "";
