@@ -1,36 +1,30 @@
-$(document).ready(
-		function() {
-			var myP = $("#myP");
-			var myB = $("#myB");
-			var myBC = $("#myBC");
-			var myText = $("<textarea id=\"myTextArea\"></textarea>");
+$(document).ready(function() {
+	var myP = $("#myP");
+	var myBC = $("#myBC");
+	var myText = $("<textarea id=\"myTextArea\"></textarea>");
+	var myB = $("<button id=\"myB\">save</button>");
 
-			// myText.hide();
-			myB.hide();
+	// click on p
+	myP.click(function() {
+		myText.show();
+		myB.show();
+		$("body").append(myText);
+		$("body").append(myB);
+		myText.val(myEncode(myP.html()));
+	});
 
-			// click on p
-			myP.on('click', function(e) {
-				if (e.target !== this)
-					return;
-				myText.show();
-				myP.append(myText);
-				myB.show();
-				myText.val(myEncode(myP.html().replace(
-						"<textarea id=\"myTextArea\"></textarea>", "")));
-			});
+	// save changes
+	myB.click(function() {
+		myP.html(myDecode(myText.val()));
+		setCookie("aminEditor", encodeURIComponent(myP.html()), 30);
+		myText.hide();
+		myB.hide();
+	});
 
-			// save changes
-			myB.click(function() {
-				myP.html(myDecode(myText.val()));
-				setCookie("aminEditor", encodeURIComponent(myP.html()), 30);
-				myB.hide();
-				myText.remove();
-			});
-
-			myBC.click(function() {
-				alert(decodeURIComponent(getCookie("aminEditor")));
-			});
-		});
+	myBC.click(function() {
+		alert(decodeURIComponent(getCookie("aminEditor")));
+	});
+});
 
 function myDecode(myStr) {
 	return myStr.replace("*کج*", "<bdo class=\"leftInline\">").replace("*/کج*",
