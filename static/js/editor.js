@@ -27,9 +27,11 @@ $(document).ready(function() {
 	myB.click(function() {
 		myP.html(myDecode(myText.val()));
 		var myStr = "";
+		
 		$("p").each(function(i, obj) {
-			myStr = myStr + obj.innerHTML;
+			myStr = myStr + "<" + obj.nodeName + ">" + obj.innerHTML + "</" + obj.nodeName + ">\n";
 		});
+		
 		setCookie("aminEditor", myStr, 30);
 		myText.hide();
 		myB.hide();
