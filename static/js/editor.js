@@ -1,46 +1,51 @@
-$(document).ready(function() {
-	var myP = $("#myP");
-	var myBC = $("#myBC");
-	var myText = $("<textarea id=\"myTextArea\"></textarea>");
-	var myB = $("<button id=\"myB\">save</button>");
+$(document).ready(
+		function() {
+			var myP = $("#myP");
+			var myBC = $("#myBC");
+			var myText = $("<textarea id=\"myTextArea\"></textarea>");
+			var myB = $("<button id=\"myB\">save</button>");
 
-	// click on p
-	$("p").click(function() {
-		myP = $(this);
+			// click on p
+			$("p").click(function() {
+				myP = $(this);
 
-		if ($("#myTextArea").length)
-			myText.show();
+				if ($("#myTextArea").length)
+					myText.show();
 
-		else
-			$("body").append(myText);
+				else
+					$("body").append(myText);
 
-		if ($("#myB").length)
-			myB.show();
+				if ($("#myB").length)
+					myB.show();
 
-		else
-			$("body").append(myB);
+				else
+					$("body").append(myB);
 
-		myText.val(myEncode(myP.html()));
-	});
+				myText.val(myEncode(myP.html()));
+			});
 
-	// save changes
-	myB.click(function() {
-		myP.html(myDecode(myText.val()));
-		var myStr = "";
-		
-		$("p").each(function(i, obj) {
-			myStr = myStr + "<" + obj.nodeName + ">" + obj.innerHTML + "</" + obj.nodeName + ">\n";
+			// save changes
+			myB.click(function() {
+				myP.html(myDecode(myText.val()));
+				var myStr = "";
+
+				$("p").each(
+						function(i, obj) {
+							myStr = myStr + "<" + obj.nodeName + ">"
+									+ obj.innerHTML + "</" + obj.nodeName
+									+ ">\n";
+						});
+
+				setCookie("aminEditor", myStr, 30);
+				myText.hide();
+				myB.hide();
+			});
+
+			myBC.click(function() {
+				alert(getCookie("aminEditor"));
+				download("myIndex.html", getCookie("aminEditor"));
+			});
 		});
-		
-		setCookie("aminEditor", myStr, 30);
-		myText.hide();
-		myB.hide();
-	});
-
-	myBC.click(function() {
-		alert(getCookie("aminEditor"));
-	});
-});
 
 function myDecode(myStr) {
 	return myStr.replace("*کج*", "<bdo class=\"leftInline\">").replace("*/کج*",
@@ -72,4 +77,18 @@ function getCookie(cname) {
 		}
 	}
 	return "";
+}
+
+function download(filename, text) {
+	var element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,'
+			+ encodeURIComponent(text));
+	element.setAttribute('download', filename);
+
+	element.style.display = 'none';
+	document.body.appendChild(element);
+
+	element.click();
+
+	document.body.removeChild(element);
 }
