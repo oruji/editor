@@ -1,70 +1,69 @@
-$(document).ready(
-		function() {
-			var currentElement = $("#myP");
-			var myBC = $("#myBC");
-			var myText = $("<textarea id=\"myTextArea\"></textarea>");
-			var saveButton = $("<button id=\"saveButton\">save</button>");
-			var addButton = $("<button id=\"addButton\">add</button>");
-			var removeButton = $("<button id=\"removeButton\">remove</button>");
+$(document).ready(function() {
+	var currentElement = $("#myP");
+	var myBC = $("#myBC");
+	var myText = $("<textarea id=\"myTextArea\"></textarea>");
+	var saveButton = $("<button id=\"saveButton\">save</button>");
+	var addButton = $("<button id=\"addButton\">add</button>");
+	var removeButton = $("<button id=\"removeButton\">remove</button>");
 
-			// click on p
-			$(document).on("click", "p, h1, h2, h3", function() {
-				currentElement = $(this);
+	// click on p
+	$(document).on("click", "p, h1, h2, h3", function() {
+		currentElement = $(this);
 
-				saveButton.show();
-				myText.show();
-				addButton.show();
-				removeButton.show();
-				currentElement.after(myText);
-				currentElement.after(saveButton);
-				currentElement.after(addButton);
-				currentElement.after(removeButton);
+		saveButton.show();
+		myText.show();
+		addButton.show();
+		removeButton.show();
+		currentElement.after(myText);
+		currentElement.after(saveButton);
+		currentElement.after(addButton);
+		currentElement.after(removeButton);
 
-				myText.val(myEncode(currentElement.html()));
-			});
+		myText.val(myEncode(currentElement.html()));
+	});
 
-			// save changes
-			saveButton.click(function() {
-				currentElement.html(myDecode(myText.val()));
-				var myStr = "";
+	// save changes
+	saveButton.click(function() {
+		currentElement.html(myDecode(myText.val()));
+		var myStr = "";
 
-				// add all tags to cookie
-				$("p, h1, h2, h3").each(
-						function(i, obj) {
-							myStr = myStr + "<" + obj.nodeName + ">"
-									+ obj.innerHTML + "</" + obj.nodeName
-									+ ">\n";
-						});
+		// add all tags to cookie
+		$("p, h1, h2, h3").each(
+				function(i, obj) {
+					myStr = myStr + "<" + obj.nodeName + ">"
+							+ obj.innerHTML + "</"
+							+ obj.nodeName + ">\n";
+				});
 
-				setCookie("aminEditor", myStr, 30);
-				myText.hide();
-				saveButton.hide();
-				addButton.hide();
-				removeButton.hide();
-			});
+		setCookie("aminEditor", myStr, 30);
+		myText.hide();
+		saveButton.hide();
+		addButton.hide();
+		removeButton.hide();
+	});
 
-			addButton.click(function() {
-				var newElement = $("<p>new Element!</p>");
-				currentElement.after(newElement);
-				myText.hide();
-				saveButton.hide();
-				addButton.hide();
-				removeButton.hide();
-			});
+	addButton.click(function() {
+		var newElement = $("<p>new Element!</p>");
+		currentElement.after(newElement);
+		myText.hide();
+		saveButton.hide();
+		addButton.hide();
+		removeButton.hide();
+	});
 
-			removeButton.click(function() {
-				currentElement.remove();
-				myText.hide();
-				saveButton.hide();
-				addButton.hide();
-				removeButton.hide();
-			});
-			
-			myBC.click(function() {
-				alert(getCookie("aminEditor"));
-				download("myIndex.html", getCookie("aminEditor"));
-			});
-		});
+	removeButton.click(function() {
+		currentElement.remove();
+		myText.hide();
+		saveButton.hide();
+		addButton.hide();
+		removeButton.hide();
+	});
+
+	myBC.click(function() {
+		alert(getCookie("aminEditor"));
+		download("myIndex.html", getCookie("aminEditor"));
+	});
+});
 
 function myDecode(myStr) {
 	return myStr.replace("*کج*", "<bdo class=\"leftInline\">").replace("*/کج*",
