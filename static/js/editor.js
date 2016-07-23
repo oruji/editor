@@ -5,6 +5,7 @@ $(document).ready(function() {
 	var saveButton = $("<button id=\"saveButton\">save</button>");
 	var addButton = $("<button id=\"addButton\">add</button>");
 	var removeButton = $("<button id=\"removeButton\">remove</button>");
+	var boldButton = $("<button id=\"boldButton\">bold</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3", function() {
@@ -14,10 +15,12 @@ $(document).ready(function() {
 		myText.show();
 		addButton.show();
 		removeButton.show();
+		boldButton.show();
 		currentElement.after(myText);
 		currentElement.after(saveButton);
 		currentElement.after(addButton);
 		currentElement.after(removeButton);
+		currentElement.after(boldButton);
 
 		myText.val(myEncode(currentElement.html()));
 	});
@@ -40,6 +43,7 @@ $(document).ready(function() {
 		saveButton.hide();
 		addButton.hide();
 		removeButton.hide();
+		boldButton.hide();
 	});
 
 	addButton.click(function() {
@@ -57,6 +61,10 @@ $(document).ready(function() {
 		saveButton.hide();
 		addButton.hide();
 		removeButton.hide();
+	});
+
+	boldButton.click(function() {
+		replacer();
 	});
 
 	myBC.click(function() {
@@ -109,4 +117,42 @@ function download(filename, text) {
 	element.click();
 
 	document.body.removeChild(element);
+}
+
+function replacer() {
+    var sel, range;
+    if (window.getSelection) {
+    	var html = window.getSelection().toString();
+    	if(html.length == 0)
+    		return;
+    	html = "<b>" + html + "</b>";
+        // IE9 and non-IE
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+
+            // Range.createContextualFragment() would be useful here but is
+            // non-standard and not supported in all browsers (IE9, for one)
+            var el = document.createElement("div");
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(), node, lastNode;
+            while ( (node = el.firstChild) ) {
+                lastNode = frag.appendChild(node);
+            }
+            range.insertNode(frag);
+            
+            // Preserve the selection
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    } else if (document.selection && document.selection.type != "Control") {
+        // IE < 9
+        document.selection.createRange().pasteHTML(html);
+    }
 }
