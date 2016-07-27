@@ -81,59 +81,27 @@ $(document).ready(function() {
 	});
 });
 
-function setCookie(cname, cvalue, exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	var expires = "expires=" + d.toUTCString();
-	document.cookie = cname + "=" + encodeURIComponent(cvalue) + "; " + expires;
-}
-
-function getCookie(cname) {
-	var name = cname + "=";
-	var ca = document.cookie.split(';');
-	for (var i = 0; i < ca.length; i++) {
-		var c = ca[i];
-		while (c.charAt(0) == ' ') {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return decodeURIComponent(c.substring(name.length, c.length));
-		}
-	}
-	return "";
-}
-
-function download(filename, text) {
-	var element = document.createElement('a');
-	element.setAttribute('href', 'data:text/plain;charset=utf-8,'
-			+ encodeURIComponent(text));
-	element.setAttribute('download', filename);
-
-	element.style.display = 'none';
-	document.body.appendChild(element);
-
-	element.click();
-
-	document.body.removeChild(element);
-}
-
 function replacer(clicked_id) {
-	var spe = getSelectionParentElement();
-	
+	var spe = getSelectionParentElement2();
+
     var myChild;
     
     if (clicked_id == "ltrButton") {
-    	if (spe.nodeName == "BDO" && spe.className == "leftInline") {
+    	if (hasMyEl(spe, "BDO", "leftInline")) {
+//    	if (spe.nodeName == "BDO" && spe.className == "leftLine") {
     		return;
     	}
-        myChild = document.createElement("bdo");
+
+        myChild = document.createElement("BDO");
         myChild.className = "leftInline";
-        
+
     } else if (clicked_id == "boldButton") {
-    	if (spe.nodeName == "STRONG") {
+    	if (hasMyEl(spe, "STRONG", "")) {
+//    	if (spe.nodeName == "STRONG"){
     		return;
     	}
-        myChild = document.createElement("strong");
+
+        myChild = document.createElement("STRONG");
     }
 	
     var sel, range;
@@ -175,6 +143,18 @@ function replacer(clicked_id) {
     }
 }
 
+function hasMyEl(myParent, tagName, className) {
+	if (myParent.nodeName == "BODY") {
+		return false;
+	}
+	
+	if (myParent.nodeName == tagName && myParent.className == className) {
+		return true;
+	}
+	
+    return hasMyEl(myParent.parentNode);
+}
+
 function getSelectionParentElement() {
     var parentEl = null, sel;
     if (window.getSelection) {
@@ -189,4 +169,57 @@ function getSelectionParentElement() {
         parentEl = sel.createRange().parentElement();
     }
     return parentEl;
+}
+
+function getSelectionParentElement2() {
+    var parentEl = null, sel;
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+            parentEl = sel.anchorNode
+            if (parentEl.nodeType != 1) {
+                parentEl = parentEl.parentNode;
+            }
+        }
+    } else if ( (sel = document.selection) && sel.type != "Control") {
+        parentEl = sel.createRange().parentElement();
+    }
+    return parentEl;
+}
+
+
+function setCookie(cname, cvalue, exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	var expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + encodeURIComponent(cvalue) + "; " + expires;
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return decodeURIComponent(c.substring(name.length, c.length));
+		}
+	}
+	return "";
+}
+
+function download(filename, text) {
+	var element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,'
+			+ encodeURIComponent(text));
+	element.setAttribute('download', filename);
+
+	element.style.display = 'none';
+	document.body.appendChild(element);
+
+	element.click();
+
+	document.body.removeChild(element);
 }

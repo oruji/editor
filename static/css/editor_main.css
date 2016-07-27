@@ -311,8 +311,9 @@ li {
 }
 
 textarea {
-	width: 680px;
+	width: 800px;
 	height: 150px;
 	font-size: 14pt;
 	font-family: onazanin, cursive, tahoma;
+	direction: ltr;
 }
