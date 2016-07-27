@@ -118,7 +118,24 @@ function download(filename, text) {
 }
 
 function replacer(clicked_id) {
-	alert(clicked_id)
+	var spe = getSelectionParentElement();
+	
+    var myChild;
+    
+    if (clicked_id == "ltrButton") {
+    	if (spe.nodeName == "BDO" && spe.className == "leftInline") {
+    		return;
+    	}
+        myChild = document.createElement("bdo");
+        myChild.className = "leftInline";
+        
+    } else if (clicked_id == "boldButton") {
+    	if (spe.nodeName == "STRONG") {
+    		return;
+    	}
+        myChild = document.createElement("strong");
+    }
+	
     var sel, range;
     if (window.getSelection) {
     	var html = window.getSelection().toString();
@@ -131,16 +148,6 @@ function replacer(clicked_id) {
             range.deleteContents();
 
             var el = document.createElement("div");
-
-            var myChild;
-            
-            if (clicked_id == "ltrButton") {
-                myChild = document.createElement("bdo");
-                myChild.className = "leftInline";
-                
-            } else if (clicked_id == "boldButton") {
-                myChild = document.createElement("strong");
-            }
 
             myChild.innerText = html;
             el.appendChild(myChild);
@@ -166,4 +173,20 @@ function replacer(clicked_id) {
         // IE < 9
         document.selection.createRange().pasteHTML(html);
     }
+}
+
+function getSelectionParentElement() {
+    var parentEl = null, sel;
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+            parentEl = sel.getRangeAt(0).commonAncestorContainer;
+            if (parentEl.nodeType != 1) {
+                parentEl = parentEl.parentNode;
+            }
+        }
+    } else if ( (sel = document.selection) && sel.type != "Control") {
+        parentEl = sel.createRange().parentElement();
+    }
+    return parentEl;
 }
