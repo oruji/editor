@@ -68,11 +68,12 @@ $(document).ready(function() {
 	});
 
 	ltrButton.click(function() {
-		replacer(this.id);
+//		replacer(this.id);
+		surroundSelection(this.id);
 	});
 	
 	boldButton.click(function() {
-		replacer(this.id);
+		surroundSelection(this.id);
 	});
 
 	myBC.click(function() {
@@ -81,68 +82,38 @@ $(document).ready(function() {
 	});
 });
 
-function replacer(clicked_id) {
-	var spe = getSelectionParentElement2();
-
-    var myChild;
-    
-    if (clicked_id == "ltrButton") {
-    	if (hasMyEl(spe, "BDO", "leftInline")) {
-//    	if (spe.nodeName == "BDO" && spe.className == "leftLine") {
-    		return;
-    	}
-
-        myChild = document.createElement("BDO");
-        myChild.className = "leftInline";
-
-    } else if (clicked_id == "boldButton") {
-    	if (hasMyEl(spe, "STRONG", "")) {
-//    	if (spe.nodeName == "STRONG"){
-    		return;
-    	}
-
-        myChild = document.createElement("STRONG");
-    }
+function surroundSelection(typeName) {
+	var myEl;
+	var myParent;
 	
-    var sel, range;
     if (window.getSelection) {
-    	var html = window.getSelection().toString();
-    	if(html.length == 0)
-    		return;
-        // IE9 and non-IE
-        sel = window.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            range = sel.getRangeAt(0);
-            range.deleteContents();
-
-            var el = document.createElement("div");
-
-            myChild.innerText = html;
-            el.appendChild(myChild);
-            var frag = document.createDocumentFragment(), node, lastNode;
-            
-            while ( (node = el.firstChild) ) {
-                lastNode = frag.appendChild(node);
-            }
-            
-            range.insertNode(frag);
-            
-            // Preserve the selection
-            if (lastNode) {
-                range = range.cloneRange();
-                range.setStartAfter(lastNode);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-            }
-        }
+        var sel = window.getSelection();
+        myParent = getSpe(sel);
         
-    } else if (document.selection && document.selection.type != "Control") {
-        // IE < 9
-        document.selection.createRange().pasteHTML(html);
+        if (sel.rangeCount) {
+        	if (typeName == "ltrButton") {
+        		if (hasMyEl(myParent, "BDO", "leftInline"))
+        			return;
+        		
+        	    myEl = document.createElement("BDO");
+        	    myEl.className = "leftInline";
+        	    
+        	} else if (typeName == "boldButton") {
+        		if (hasMyEl(myParent, "STRONG", ""))
+        			return;
+        		
+        		myEl = document.createElement("STRONG");
+        	}
+        	
+            var range = sel.getRangeAt(0).cloneRange();
+            range.surroundContents(myEl);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
     }
 }
 
+// check in parent tags recursively
 function hasMyEl(myParent, tagName, className) {
 	if (myParent.nodeName == "BODY") {
 		return false;
@@ -152,41 +123,18 @@ function hasMyEl(myParent, tagName, className) {
 		return true;
 	}
 	
-    return hasMyEl(myParent.parentNode);
+    return hasMyEl(myParent.parentNode, tagName, className);
 }
 
-function getSelectionParentElement() {
-    var parentEl = null, sel;
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-            parentEl = sel.getRangeAt(0).commonAncestorContainer;
-            if (parentEl.nodeType != 1) {
-                parentEl = parentEl.parentNode;
-            }
-        }
-    } else if ( (sel = document.selection) && sel.type != "Control") {
-        parentEl = sel.createRange().parentElement();
-    }
+// get Selected Parent
+function getSpe(sel) {
+    var parentEl = sel.anchorNode;
+    
+    if (parentEl.nodeType != 1) 
+        parentEl = parentEl.parentNode;
+        
     return parentEl;
 }
-
-function getSelectionParentElement2() {
-    var parentEl = null, sel;
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-            parentEl = sel.anchorNode
-            if (parentEl.nodeType != 1) {
-                parentEl = parentEl.parentNode;
-            }
-        }
-    } else if ( (sel = document.selection) && sel.type != "Control") {
-        parentEl = sel.createRange().parentElement();
-    }
-    return parentEl;
-}
-
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
