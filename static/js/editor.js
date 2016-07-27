@@ -6,6 +6,7 @@ $(document).ready(function() {
 	var addButton = $("<button id=\"addButton\">add</button>");
 	var removeButton = $("<button id=\"removeButton\">remove</button>");
 	var ltrButton = $("<button id=\"ltrButton\">ltr</button>");
+	var boldButton = $("<button id=\"boldButton\">bold</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3", function() {
@@ -16,11 +17,13 @@ $(document).ready(function() {
 		addButton.show();
 		removeButton.show();
 		ltrButton.show();
+		boldButton.show();
 		currentElement.after(myText);
 		currentElement.after(saveButton);
 		currentElement.after(addButton);
 		currentElement.after(removeButton);
 		currentElement.after(ltrButton);
+		currentElement.after(boldButton);
 
 		myText.val(currentElement.html());
 	});
@@ -44,6 +47,7 @@ $(document).ready(function() {
 		addButton.hide();
 		removeButton.hide();
 		ltrButton.hide();
+		boldButton.hide();
 	});
 
 	addButton.click(function() {
@@ -64,7 +68,11 @@ $(document).ready(function() {
 	});
 
 	ltrButton.click(function() {
-		replacer();
+		replacer(this.id);
+	});
+	
+	boldButton.click(function() {
+		replacer(this.id);
 	});
 
 	myBC.click(function() {
@@ -109,7 +117,8 @@ function download(filename, text) {
 	document.body.removeChild(element);
 }
 
-function replacer() {
+function replacer(clicked_id) {
+	alert(clicked_id)
     var sel, range;
     if (window.getSelection) {
     	var html = window.getSelection().toString();
@@ -122,8 +131,17 @@ function replacer() {
             range.deleteContents();
 
             var el = document.createElement("div");
-            var myChild = document.createElement("bdo");
-            myChild.className = "leftInline";
+
+            var myChild;
+            
+            if (clicked_id == "ltrButton") {
+                myChild = document.createElement("bdo");
+                myChild.className = "leftInline";
+                
+            } else if (clicked_id == "boldButton") {
+                myChild = document.createElement("strong");
+            }
+
             myChild.innerText = html;
             el.appendChild(myChild);
             var frag = document.createDocumentFragment(), node, lastNode;
