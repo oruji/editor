@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var saveButton = $("<button id=\"saveButton\">save</button>");
 	var addButton = $("<button id=\"addButton\">add</button>");
 	var removeButton = $("<button id=\"removeButton\">remove</button>");
-	var boldButton = $("<button id=\"boldButton\">bold</button>");
+	var ltrButton = $("<button id=\"ltrButton\">ltr</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3", function() {
@@ -15,19 +15,19 @@ $(document).ready(function() {
 		myText.show();
 		addButton.show();
 		removeButton.show();
-		boldButton.show();
+		ltrButton.show();
 		currentElement.after(myText);
 		currentElement.after(saveButton);
 		currentElement.after(addButton);
 		currentElement.after(removeButton);
-		currentElement.after(boldButton);
+		currentElement.after(ltrButton);
 
-		myText.val(myEncode(currentElement.html()));
+		myText.val(currentElement.html());
 	});
 
 	// save changes
 	saveButton.click(function() {
-		currentElement.html(myDecode(myText.val()));
+		currentElement.html(myText.val());
 		var myStr = "";
 
 		// add all tags to cookie
@@ -43,7 +43,7 @@ $(document).ready(function() {
 		saveButton.hide();
 		addButton.hide();
 		removeButton.hide();
-		boldButton.hide();
+		ltrButton.hide();
 	});
 
 	addButton.click(function() {
@@ -63,7 +63,7 @@ $(document).ready(function() {
 		removeButton.hide();
 	});
 
-	boldButton.click(function() {
+	ltrButton.click(function() {
 		replacer();
 	});
 
@@ -72,16 +72,6 @@ $(document).ready(function() {
 		download("myIndex.html", getCookie("aminEditor"));
 	});
 });
-
-function myDecode(myStr) {
-	return myStr.replace("*کج*", "<bdo class=\"leftInline\">").replace("*/کج*",
-			"</bdo>")
-}
-
-function myEncode(myStr) {
-	return myStr.replace("<bdo class=\"leftInline\">", "*کج*").replace(
-			"</bdo>", "*/کج*");
-}
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
@@ -125,21 +115,23 @@ function replacer() {
     	var html = window.getSelection().toString();
     	if(html.length == 0)
     		return;
-    	html = "<b>" + html + "</b>";
         // IE9 and non-IE
         sel = window.getSelection();
         if (sel.getRangeAt && sel.rangeCount) {
             range = sel.getRangeAt(0);
             range.deleteContents();
 
-            // Range.createContextualFragment() would be useful here but is
-            // non-standard and not supported in all browsers (IE9, for one)
             var el = document.createElement("div");
-            el.innerHTML = html;
+            var myChild = document.createElement("bdo");
+            myChild.className = "leftInline";
+            myChild.innerText = html;
+            el.appendChild(myChild);
             var frag = document.createDocumentFragment(), node, lastNode;
+            
             while ( (node = el.firstChild) ) {
                 lastNode = frag.appendChild(node);
             }
+            
             range.insertNode(frag);
             
             // Preserve the selection
@@ -151,6 +143,7 @@ function replacer() {
                 sel.addRange(range);
             }
         }
+        
     } else if (document.selection && document.selection.type != "Control") {
         // IE < 9
         document.selection.createRange().pasteHTML(html);
