@@ -1,85 +1,102 @@
 $(document).ready(function() {
-	var currentElement = $("#myP");
-	var myBC = $("#myBC");
+	var editMode = getQueryStrings();
+	
+if (editMode['edit'] == "true") {
+	
+	var currentElement;
 	var myText = $("<textarea id=\"myTextArea\"></textarea>");
 	var saveButton = $("<button id=\"saveButton\">save</button>");
 	var addButton = $("<button id=\"addButton\">add</button>");
 	var removeButton = $("<button id=\"removeButton\">remove</button>");
 	var ltrButton = $("<button id=\"ltrButton\">ltr</button>");
 	var boldButton = $("<button id=\"boldButton\">bold</button>");
+	var dlButton = $("<button id=\"dlButton\">download</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3", function() {
 		currentElement = $(this);
-
-		saveButton.show();
-		myText.show();
-		addButton.show();
-		removeButton.show();
-		ltrButton.show();
-		boldButton.show();
+		
+		if ($('#myTextArea').length) 
+			myText.remove();
+		myText = $("<textarea id=\"myTextArea\"></textarea>");
 		currentElement.after(myText);
+
+		if ($('#saveButton').length)
+			saveButton.remove();
+		saveButton = $("<button id=\"saveButton\">save</button>");
 		currentElement.after(saveButton);
+		
+		if ($('#addButton').length)
+			addButton.remove();
+		addButton = $("<button id=\"addButton\">add</button>");
 		currentElement.after(addButton);
+		
+		if ($('#removeButton').length)
+			removeButton.remove();
+		removeButton = $("<button id=\"removeButton\">remove</button>");
 		currentElement.after(removeButton);
+			
+		if ($('#ltrButton').length)
+			ltrButton.remove();
+		ltrButton = $("<button id=\"ltrButton\">ltr</button>");
 		currentElement.after(ltrButton);
+				
+		if ($('#boldButton').length)
+			boldButton.remove();
+		boldButton = $("<button id=\"boldButton\">bold</button>");
 		currentElement.after(boldButton);
+		
+		if ($('#dlButton').length)
+			dlButton.remove();
+		dlButton = $("<button id=\"dlButton\">download</button>");
+		currentElement.after(dlButton);
 
 		myText.val(currentElement.html());
 	});
 
 	// save changes
-	saveButton.click(function() {
+	$(document).on("click", "#saveButton", function() {
 		currentElement.html(myText.val());
-		var myStr = "";
 
-		// add all tags to cookie
-		$("p, h1, h2, h3").each(
-				function(i, obj) {
-					myStr = myStr + "<" + obj.nodeName + ">"
-							+ obj.innerHTML + "</"
-							+ obj.nodeName + ">\n";
-				});
-
-		setCookie("aminEditor", myStr, 30);
-		myText.hide();
-		saveButton.hide();
-		addButton.hide();
-		removeButton.hide();
-		ltrButton.hide();
-		boldButton.hide();
+		myText.remove();
+		saveButton.remove();
+		addButton.remove();
+		removeButton.remove();
+		ltrButton.remove();
+		boldButton.remove();
 	});
 
-	addButton.click(function() {
+	$(document).on("click", "#addButton", function() {
 		var newElement = $("<p>new Element!</p>");
 		currentElement.after(newElement);
-		myText.hide();
-		saveButton.hide();
-		addButton.hide();
-		removeButton.hide();
 	});
 
-	removeButton.click(function() {
+	$(document).on("click", "#removeButton", function() {
 		currentElement.remove();
-		myText.hide();
-		saveButton.hide();
-		addButton.hide();
-		removeButton.hide();
 	});
 
-	ltrButton.click(function() {
-//		replacer(this.id);
+	$(document).on("click", "#ltrButton", function() {
 		surroundSelection(this.id);
-	});
-	
-	boldButton.click(function() {
-		surroundSelection(this.id);
+		myText.val(currentElement.html());
 	});
 
-	myBC.click(function() {
-		alert(getCookie("aminEditor"));
-		download("myIndex.html", getCookie("aminEditor"));
+	$(document).on("click", "#boldButton", function() {
+		surroundSelection(this.id);
+		myText.val(currentElement.html());
 	});
+
+	$(document).on("click", "#dlButton", function() {
+		saveButton.remove();
+		myText.remove();
+		addButton.remove();
+		removeButton.remove();
+		ltrButton.remove();
+		dlButton.remove();
+		
+		var myContent = document.documentElement.innerHTML;
+		download("index.html", myContent);
+	});
+}
 });
 
 function surroundSelection(typeName) {
@@ -171,3 +188,19 @@ function download(filename, text) {
 
 	document.body.removeChild(element);
 }
+
+function getQueryStrings() { 
+	  var assoc  = {};
+	  var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+	  var queryString = location.search.substring(1); 
+	  var keyValues = queryString.split('&'); 
+
+	  for(var i in keyValues) { 
+	    var key = keyValues[i].split('=');
+	    if (key.length > 1) {
+	      assoc[decode(key[0])] = decode(key[1]);
+	    }
+	  } 
+
+	  return assoc; 
+} 
