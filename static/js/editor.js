@@ -102,7 +102,7 @@ if (editMode['edit'] == "true") {
 		boldButton.remove();
 		cancelButton.remove();
 		
-		var myContent = $(".center").html();
+		var myContent = $(".center").html().slice(1, -1);
 		download("index.html", myContent);
 	});
 	
