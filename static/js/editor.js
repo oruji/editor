@@ -11,6 +11,7 @@ if (editMode['edit'] == "true") {
 	var ltrButton = $("<button id=\"ltrButton\">ltr</button>");
 	var boldButton = $("<button id=\"boldButton\">bold</button>");
 	var downloadButton = $("<button id=\"downloadButton\">download</button>");
+	var cancelButton = $("<button id=\"cancelButton\">cancel</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3", function() {
@@ -50,7 +51,12 @@ if (editMode['edit'] == "true") {
 			downloadButton.remove();
 		downloadButton = $("<button id=\"downloadButton\">download</button>");
 		currentElement.after(downloadButton);
-
+		
+		if ($('#cancelButton').length)
+			cancelButton.remove();
+		cancelButton = $("<button id=\"cancelButton\">cancel</button>");
+		currentElement.after(cancelButton);
+		
 		myText.val(currentElement.html());
 	});
 
@@ -64,6 +70,7 @@ if (editMode['edit'] == "true") {
 		removeButton.remove();
 		ltrButton.remove();
 		boldButton.remove();
+		cancelButton.remove();
 	});
 
 	$(document).on("click", "#addButton", function() {
@@ -77,12 +84,12 @@ if (editMode['edit'] == "true") {
 
 	$(document).on("click", "#ltrButton", function() {
 		surroundSelection(this.id);
-		myText.val(currentElement.html());
+//		myText.val(currentElement.html());
 	});
 
 	$(document).on("click", "#boldButton", function() {
 		surroundSelection(this.id);
-		myText.val(currentElement.html());
+//		myText.val(currentElement.html());
 	});
 
 	$(document).on("click", "#downloadButton", function() {
@@ -93,9 +100,21 @@ if (editMode['edit'] == "true") {
 		ltrButton.remove();
 		downloadButton.remove();
 		boldButton.remove();
+		cancelButton.remove();
 		
-		var myContent = document.documentElement.innerHTML;
+		var myContent = $(".center").html();
 		download("index.html", myContent);
+	});
+	
+	$(document).on("click", "#cancelButton", function() {
+		saveButton.remove();
+		myText.remove();
+		addButton.remove();
+		removeButton.remove();
+		ltrButton.remove();
+		downloadButton.remove();
+		boldButton.remove();
+		cancelButton.remove();
 	});
 }
 });
@@ -106,6 +125,10 @@ function surroundSelection(typeName) {
 	
     if (window.getSelection) {
         var sel = window.getSelection();
+        
+        if (sel.toString() == "")
+        	return;
+
         myParent = getSpe(sel);
         
         if (sel.rangeCount) {
