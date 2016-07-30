@@ -17,7 +17,7 @@ if (editMode['edit'] == "true") {
 	$(document).on("click", "p, h1, h2, h3", function() {
 		currentElement = $(this);
 		
-		if ($('#myTextArea').length) 
+		if ($('#myTextArea').length)
 			myText.remove();
 		myText = $("<textarea id=\"myTextArea\"></textarea>");
 		currentElement.after(myText);
@@ -84,12 +84,12 @@ if (editMode['edit'] == "true") {
 
 	$(document).on("click", "#ltrButton", function() {
 		surroundSelection(this.id);
-//		myText.val(currentElement.html());
+		myText.val(currentElement.html(currentElement.html()).html());
 	});
 
 	$(document).on("click", "#boldButton", function() {
 		surroundSelection(this.id);
-//		myText.val(currentElement.html());
+		myText.val(currentElement.html(currentElement.html()).html());
 	});
 
 	$(document).on("click", "#downloadButton", function() {
@@ -120,18 +120,17 @@ if (editMode['edit'] == "true") {
 });
 
 function surroundSelection(typeName) {
-	var myEl;
-	var myParent;
-	
     if (window.getSelection) {
+    	var myEl;
         var sel = window.getSelection();
         
         if (sel.toString() == "")
         	return;
 
-        myParent = getSpe(sel);
+        var myParent = getSpe(sel);
         
         if (sel.rangeCount) {
+        	var myEl;
         	if (typeName == "ltrButton") {
         		if (hasMyEl(myParent, "BDO", "leftInline"))
         			return;
@@ -228,3 +227,11 @@ function getQueryStrings() {
 
 	  return assoc; 
 } 
+
+function clearSelection() {
+    if (document.selection) 
+        document.selection.empty();
+
+    else if (window.getSelection) 
+        window.getSelection().removeAllRanges();
+}
