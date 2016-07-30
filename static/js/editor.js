@@ -14,7 +14,7 @@ if (editMode['edit'] == "true") {
 	var cancelButton = $("<button id=\"cancelButton\">cancel</button>");
 
 	// click on p
-	$(document).on("click", "p, h1, h2, h3", function() {
+	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
 		currentElement = $(this);
 		
 		if ($('#myTextArea').length)
