@@ -10,7 +10,7 @@ if (editMode['edit'] == "true") {
 	var removeButton = $("<button id=\"removeButton\">remove</button>");
 	var ltrButton = $("<button id=\"ltrButton\">ltr</button>");
 	var boldButton = $("<button id=\"boldButton\">bold</button>");
-	var dlButton = $("<button id=\"dlButton\">download</button>");
+	var downloadButton = $("<button id=\"downloadButton\">download</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3", function() {
@@ -46,10 +46,10 @@ if (editMode['edit'] == "true") {
 		boldButton = $("<button id=\"boldButton\">bold</button>");
 		currentElement.after(boldButton);
 		
-		if ($('#dlButton').length)
-			dlButton.remove();
-		dlButton = $("<button id=\"dlButton\">download</button>");
-		currentElement.after(dlButton);
+		if ($('#downloadButton').length)
+			downloadButton.remove();
+		downloadButton = $("<button id=\"downloadButton\">download</button>");
+		currentElement.after(downloadButton);
 
 		myText.val(currentElement.html());
 	});
@@ -85,13 +85,14 @@ if (editMode['edit'] == "true") {
 		myText.val(currentElement.html());
 	});
 
-	$(document).on("click", "#dlButton", function() {
+	$(document).on("click", "#downloadButton", function() {
 		saveButton.remove();
 		myText.remove();
 		addButton.remove();
 		removeButton.remove();
 		ltrButton.remove();
-		dlButton.remove();
+		downloadButton.remove();
+		boldButton.remove();
 		
 		var myContent = document.documentElement.innerHTML;
 		download("index.html", myContent);
