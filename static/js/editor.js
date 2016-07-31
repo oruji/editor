@@ -52,6 +52,13 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "#cancelButton", function() {
 		removeTempTags();
 	});
+	
+	$(document).on("change", "#tagType", function() {
+		var newElement = $("<" + this.value + ">" + currentElement.html() + "</" + this.value + ">");
+		currentElement.after(newElement);
+		currentElement.remove();
+		currentElement = newElement;
+	});
 }
 });
 

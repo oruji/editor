@@ -137,7 +137,7 @@ h1 {
 	font-size: 20pt;
 }
 
-.mypre {
+pre {
 	direction: ltr;
 	text-align: left;
 	font-family: "Courier New", Courier, mono, serif;
