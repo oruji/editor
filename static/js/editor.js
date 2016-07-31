@@ -7,38 +7,8 @@ if (getQueryStrings()['edit'] == "true") {
 	// click on p
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
 		currentElement = $(this);
-		
-		if ($('#editText').length)
-			$('#editText').remove();
-		currentElement.after($("<textarea id=\"editText\"></textarea>"));
 
-		if ($('#saveButton').length)
-			$('#saveButton').remove();
-		currentElement.after($("<button id=\"saveButton\">save</button>"));
-		
-		if ($('#addButton').length)
-			$('#addButton').remove();
-		currentElement.after($("<button id=\"addButton\">add</button>"));
-		
-		if ($('#removeButton').length)
-			$('#removeButton').remove();
-		currentElement.after($("<button id=\"removeButton\">remove</button>"));
-			
-		if ($('#ltrButton').length)
-			$('#ltrButton').remove();
-		currentElement.after($("<button id=\"ltrButton\">ltr</button>"));
-				
-		if ($('#boldButton').length)
-			$('#boldButton').remove();
-		currentElement.after($("<button id=\"boldButton\">bold</button>"));
-		
-		if ($('#downloadButton').length)
-			$('#downloadButton').remove();
-		currentElement.after($("<button id=\"downloadButton\">download</button>"));
-
-		if ($('#cancelButton').length)
-			$('#cancelButton').remove();
-		currentElement.after($("<button id=\"cancelButton\">cancel</button>"));
+		renewTempTags(currentElement);
 
 		$('#editText').val(currentElement.html());
 	});
@@ -47,21 +17,19 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "#saveButton", function() {
 		currentElement.html($('#editText').val());
 
-		$('#editText').remove();
-		$('#saveButton').remove();
-		$('#addButton').remove();
-		$('#removeButton').remove();
-		$('#ltrButton').remove();
-		$('#boldButton').remove();
-		$('#cancelButton').remove();
+		removeTempTags();
 	});
 
-	$(document).on("click", "#addButton", function() {
+	$(document).on("click", "#newButton", function() {
 		currentElement.after($("<p>new Element!</p>"));
+		
+		removeTempTags();
 	});
 
 	$(document).on("click", "#removeButton", function() {
 		currentElement.remove();
+		
+		removeTempTags();
 	});
 
 	$(document).on("click", "#ltrButton", function() {
@@ -75,28 +43,14 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#downloadButton", function() {
-		$('#saveButton').remove();
-		$('#editText').remove();
-		$('#addButton').remove();
-		$('#removeButton').remove();
-		$('#ltrButton').remove();
-		$('#downloadButton').remove();
-		$('#boldButton').remove();
-		$('#cancelButton').remove();
+		removeTempTags();
 		
 		var myContent = $(".center").html().slice(1, -1);
 		download("index.html", myContent);
 	});
 	
 	$(document).on("click", "#cancelButton", function() {
-		$('#saveButton').remove();
-		$('#editText').remove();
-		$('#addButton').remove();
-		$('#removeButton').remove();
-		$('#ltrButton').remove();
-		$('#downloadButton').remove();
-		$('#boldButton').remove();
-		$('#cancelButton').remove();
+		removeTempTags();
 	});
 }
 });
@@ -216,4 +170,49 @@ function clearSelection() {
 
     else if (window.getSelection) 
         window.getSelection().removeAllRanges();
+}
+
+function removeTempTags() {
+	$('#saveButton').remove();
+	$('#editText').remove();
+	$('#newButton').remove();
+	$('#removeButton').remove();
+	$('#ltrButton').remove();
+	$('#downloadButton').remove();
+	$('#boldButton').remove();
+	$('#cancelButton').remove();
+}
+
+function renewTempTags(currentElement) {
+	if ($('#editText').length)
+		$('#editText').remove();
+	currentElement.after($("<textarea id=\"editText\"></textarea>"));
+
+	if ($('#saveButton').length)
+		$('#saveButton').remove();
+	currentElement.after($("<button id=\"saveButton\">save</button>"));
+	
+	if ($('#newButton').length)
+		$('#newButton').remove();
+	currentElement.after($("<button id=\"newButton\">new</button>"));
+	
+	if ($('#removeButton').length)
+		$('#removeButton').remove();
+	currentElement.after($("<button id=\"removeButton\">remove</button>"));
+		
+	if ($('#ltrButton').length)
+		$('#ltrButton').remove();
+	currentElement.after($("<button id=\"ltrButton\">ltr</button>"));
+			
+	if ($('#boldButton').length)
+		$('#boldButton').remove();
+	currentElement.after($("<button id=\"boldButton\">bold</button>"));
+	
+	if ($('#downloadButton').length)
+		$('#downloadButton').remove();
+	currentElement.after($("<button id=\"downloadButton\">download</button>"));
+
+	if ($('#cancelButton').length)
+		$('#cancelButton').remove();
+	currentElement.after($("<button id=\"cancelButton\">cancel</button>"));
 }
