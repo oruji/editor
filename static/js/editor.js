@@ -181,6 +181,7 @@ function removeTempTags() {
 	$('#downloadButton').remove();
 	$('#boldButton').remove();
 	$('#cancelButton').remove();
+	$('#tagType').remove();
 }
 
 function renewTempTags(currentElement) {
@@ -215,4 +216,9 @@ function renewTempTags(currentElement) {
 	if ($('#cancelButton').length)
 		$('#cancelButton').remove();
 	currentElement.after($("<button id=\"cancelButton\">cancel</button>"));
+	
+	if ($('#tagType').length)
+		$('#tagType').remove();
+	var mySelect = $("<select id='tagType'><option value='P'>P</option><option value='H1'>H1</option><option value='H2'>H2</option><option value='H3'>H3</option><option value='H4'>H4</option><option value='PRE'>PRE</option></select>");
+	currentElement.after(mySelect.val(currentElement.prop("tagName")));
 }
