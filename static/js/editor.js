@@ -1,81 +1,63 @@
 $(document).ready(function() {
-	var editMode = getQueryStrings();
 	
-if (editMode['edit'] == "true") {
+if (getQueryStrings()['edit'] == "true") {
 	
 	var currentElement;
-	var myText = $("<textarea id=\"myTextArea\"></textarea>");
-	var saveButton = $("<button id=\"saveButton\">save</button>");
-	var addButton = $("<button id=\"addButton\">add</button>");
-	var removeButton = $("<button id=\"removeButton\">remove</button>");
-	var ltrButton = $("<button id=\"ltrButton\">ltr</button>");
-	var boldButton = $("<button id=\"boldButton\">bold</button>");
-	var downloadButton = $("<button id=\"downloadButton\">download</button>");
-	var cancelButton = $("<button id=\"cancelButton\">cancel</button>");
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
 		currentElement = $(this);
 		
-		if ($('#myTextArea').length)
-			myText.remove();
-		myText = $("<textarea id=\"myTextArea\"></textarea>");
-		currentElement.after(myText);
+		if ($('#editText').length)
+			$('#editText').remove();
+		currentElement.after($("<textarea id=\"editText\"></textarea>"));
 
 		if ($('#saveButton').length)
-			saveButton.remove();
-		saveButton = $("<button id=\"saveButton\">save</button>");
-		currentElement.after(saveButton);
+			$('#saveButton').remove();
+		currentElement.after($("<button id=\"saveButton\">save</button>"));
 		
 		if ($('#addButton').length)
-			addButton.remove();
-		addButton = $("<button id=\"addButton\">add</button>");
-		currentElement.after(addButton);
+			$('#addButton').remove();
+		currentElement.after($("<button id=\"addButton\">add</button>"));
 		
 		if ($('#removeButton').length)
-			removeButton.remove();
-		removeButton = $("<button id=\"removeButton\">remove</button>");
-		currentElement.after(removeButton);
+			$('#removeButton').remove();
+		currentElement.after($("<button id=\"removeButton\">remove</button>"));
 			
 		if ($('#ltrButton').length)
-			ltrButton.remove();
-		ltrButton = $("<button id=\"ltrButton\">ltr</button>");
-		currentElement.after(ltrButton);
+			$('#ltrButton').remove();
+		currentElement.after($("<button id=\"ltrButton\">ltr</button>"));
 				
 		if ($('#boldButton').length)
-			boldButton.remove();
-		boldButton = $("<button id=\"boldButton\">bold</button>");
-		currentElement.after(boldButton);
+			$('#boldButton').remove();
+		currentElement.after($("<button id=\"boldButton\">bold</button>"));
 		
 		if ($('#downloadButton').length)
-			downloadButton.remove();
-		downloadButton = $("<button id=\"downloadButton\">download</button>");
-		currentElement.after(downloadButton);
-		
+			$('#downloadButton').remove();
+		currentElement.after($("<button id=\"downloadButton\">download</button>"));
+
 		if ($('#cancelButton').length)
-			cancelButton.remove();
-		cancelButton = $("<button id=\"cancelButton\">cancel</button>");
-		currentElement.after(cancelButton);
-		
-		myText.val(currentElement.html());
+			$('#cancelButton').remove();
+		currentElement.after($("<button id=\"cancelButton\">cancel</button>"));
+
+		$('#editText').val(currentElement.html());
 	});
 
 	// save changes
 	$(document).on("click", "#saveButton", function() {
-		currentElement.html(myText.val());
+		currentElement.html($('#editText').val());
 
-		myText.remove();
-		saveButton.remove();
-		addButton.remove();
-		removeButton.remove();
-		ltrButton.remove();
-		boldButton.remove();
-		cancelButton.remove();
+		$('#editText').remove();
+		$('#saveButton').remove();
+		$('#addButton').remove();
+		$('#removeButton').remove();
+		$('#ltrButton').remove();
+		$('#boldButton').remove();
+		$('#cancelButton').remove();
 	});
 
 	$(document).on("click", "#addButton", function() {
-		var newElement = $("<p>new Element!</p>");
-		currentElement.after(newElement);
+		currentElement.after($("<p>new Element!</p>"));
 	});
 
 	$(document).on("click", "#removeButton", function() {
@@ -84,37 +66,37 @@ if (editMode['edit'] == "true") {
 
 	$(document).on("click", "#ltrButton", function() {
 		surroundSelection(this.id);
-		myText.val(currentElement.html(currentElement.html()).html());
+		$('#editText').val(currentElement.html(currentElement.html()).html());
 	});
 
 	$(document).on("click", "#boldButton", function() {
 		surroundSelection(this.id);
-		myText.val(currentElement.html(currentElement.html()).html());
+		$('#editText').val(currentElement.html(currentElement.html()).html());
 	});
 
 	$(document).on("click", "#downloadButton", function() {
-		saveButton.remove();
-		myText.remove();
-		addButton.remove();
-		removeButton.remove();
-		ltrButton.remove();
-		downloadButton.remove();
-		boldButton.remove();
-		cancelButton.remove();
+		$('#saveButton').remove();
+		$('#editText').remove();
+		$('#addButton').remove();
+		$('#removeButton').remove();
+		$('#ltrButton').remove();
+		$('#downloadButton').remove();
+		$('#boldButton').remove();
+		$('#cancelButton').remove();
 		
 		var myContent = $(".center").html().slice(1, -1);
 		download("index.html", myContent);
 	});
 	
 	$(document).on("click", "#cancelButton", function() {
-		saveButton.remove();
-		myText.remove();
-		addButton.remove();
-		removeButton.remove();
-		ltrButton.remove();
-		downloadButton.remove();
-		boldButton.remove();
-		cancelButton.remove();
+		$('#saveButton').remove();
+		$('#editText').remove();
+		$('#addButton').remove();
+		$('#removeButton').remove();
+		$('#ltrButton').remove();
+		$('#downloadButton').remove();
+		$('#boldButton').remove();
+		$('#cancelButton').remove();
 	});
 }
 });
