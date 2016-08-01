@@ -1,16 +1,15 @@
 $(document).ready(function() {
 	
 if (getQueryStrings()['edit'] == "true") {
-	
 	var currentElement;
 
 	// click on p
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
 		currentElement = $(this);
-
+//		currentElement.attr('contenteditable', 'true');
 		renewTempTags(currentElement);
-
-		$('#editText').val(currentElement.html());
+		
+		$('#editText').val(currentElement.html().slice(1, -1));
 	});
 
 	// save changes
