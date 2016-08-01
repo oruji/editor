@@ -6,7 +6,6 @@ if (getQueryStrings()['edit'] == "true") {
 	// click on element
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
 		currentElement = $(this);
-//		currentElement.attr('contenteditable', 'true');
 		renewTempTags(currentElement);
 		
 		$('#editText').val(currentElement.html());
@@ -52,11 +51,32 @@ if (getQueryStrings()['edit'] == "true") {
 		removeTempTags();
 	});
 
+	$(document).on("click", "#dl", function() {
+		removeAttr($("#editText"), "dir", "ltr");
+		removeAttr($("#editText"), "dir", "rtl");
+		
+		$("#editText").attr("dir", "ltr");
+	});
+	
+	$(document).on("click", "#dr", function() {
+		removeAttr($("#editText"), "dir", "ltr");
+		removeAttr($("#editText"), "dir", "rtl");
+		
+		$("#editText").attr("dir", "rtl");
+	});
+	
 	$(document).on("change", "#tagType", function() {
 		var newElement = $("<" + this.value + ">" + currentElement.html() + "</" + this.value + ">");
 		currentElement.after(newElement);
 		currentElement.remove();
 		currentElement = newElement;
+		
+		if(this.value == "PRE") {
+			removeAttr($("#editText"), "dir", "ltr");
+			removeAttr($("#editText"), "dir", "rtl");
+			
+			$("#editText").attr("dir", "ltr");
+		}
 	});
 }
 });
@@ -188,12 +208,17 @@ function removeTempTags() {
 	$('#boldButton').remove();
 	$('#cancelButton').remove();
 	$('#tagType').remove();
+	$('#dl').remove();
+	$('#dr').remove();
 }
 
 function renewTempTags(currentElement) {
 	if ($('#editText').length)
 		$('#editText').remove();
-	currentElement.after($("<textarea id=\"editText\"></textarea>"));
+	if (currentElement.prop("tagName") == "PRE")
+		currentElement.after($("<textarea dir=\"ltr\" id=\"editText\"></textarea>"));
+	else
+		currentElement.after($("<textarea id=\"editText\"></textarea>"));
 
 	if ($('#saveButton').length)
 		$('#saveButton').remove();
@@ -222,9 +247,28 @@ function renewTempTags(currentElement) {
 	if ($('#cancelButton').length)
 		$('#cancelButton').remove();
 	currentElement.after($("<button id=\"cancelButton\">cancel</button>"));
+
+	if ($('#dl').length)
+		$('#dl').remove();
+	currentElement.after($("<button id=\"dl\">dl</button>"));
+	
+	if ($('#dr').length)
+		$('#dr').remove();
+	currentElement.after($("<button id=\"dr\">dr</button>"));
 	
 	if ($('#tagType').length)
 		$('#tagType').remove();
 	var mySelect = $("<select id='tagType'><option value='P'>P</option><option value='H1'>H1</option><option value='H2'>H2</option><option value='H3'>H3</option><option value='H4'>H4</option><option value='PRE'>PRE</option></select>");
 	currentElement.after(mySelect.val(currentElement.prop("tagName")));
+}
+
+function removeAttr(currentElement, myAttrKey, myAttrVal) {
+	if (typeof currentElement != typeof undefined) {
+		var attr = currentElement.attr(myAttrKey, myAttrVal);
+
+		if (typeof attr !== typeof undefined && attr !== false)
+			currentElement.removeAttr(myAttrKey);
+	}
+	
+	return currentElement;
 }
