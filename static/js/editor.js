@@ -9,7 +9,7 @@ if (getQueryStrings()['edit'] == "true") {
 //		currentElement.attr('contenteditable', 'true');
 		renewTempTags(currentElement);
 		
-		$('#editText').val(currentElement.html().slice(1, -1));
+		$('#editText').val(currentElement.html());
 	});
 
 	// save changes
@@ -44,7 +44,7 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "#downloadButton", function() {
 		removeTempTags();
 		
-		var myContent = $(".center").html().slice(1, -1);
+		var myContent = $(".center").html();
 		download("index.html", myContent);
 	});
 	
