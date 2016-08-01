@@ -4,7 +4,7 @@ if (getQueryStrings()['edit'] == "true") {
 	var currentElement;
 
 	// click on element
-	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
+	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, ul, ol", function() {
 		currentElement = $(this);
 		renewTempTags(currentElement);
 		
@@ -258,7 +258,7 @@ function renewTempTags(currentElement) {
 	
 	if ($('#tagType').length)
 		$('#tagType').remove();
-	var mySelect = $("<select id='tagType'><option value='P'>P</option><option value='H1'>H1</option><option value='H2'>H2</option><option value='H3'>H3</option><option value='H4'>H4</option><option value='PRE'>PRE</option></select>");
+	var mySelect = $("<select id='tagType'><option value='P'>P</option><option value='H1'>H1</option><option value='H2'>H2</option><option value='H3'>H3</option><option value='H4'>H4</option><option value='PRE'>PRE</option><option value='UL'>UL</option><option value='OL'>OL</option></select>");
 	currentElement.after(mySelect.val(currentElement.prop("tagName")));
 }
 
