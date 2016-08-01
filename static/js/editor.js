@@ -1,9 +1,9 @@
 $(document).ready(function() {
-	
+
 if (getQueryStrings()['edit'] == "true") {
 	var currentElement;
 
-	// click on p
+	// click on element
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, li", function() {
 		currentElement = $(this);
 //		currentElement.attr('contenteditable', 'true');
@@ -47,11 +47,11 @@ if (getQueryStrings()['edit'] == "true") {
 		var myContent = $(".center").html();
 		download("index.html", myContent);
 	});
-	
+
 	$(document).on("click", "#cancelButton", function() {
 		removeTempTags();
 	});
-	
+
 	$(document).on("change", "#tagType", function() {
 		var newElement = $("<" + this.value + ">" + currentElement.html() + "</" + this.value + ">");
 		currentElement.after(newElement);
@@ -65,7 +65,7 @@ function surroundSelection(typeName) {
     if (window.getSelection) {
     	var myEl;
         var sel = window.getSelection();
-        
+
         if (sel.toString() == "")
         	return;
 
