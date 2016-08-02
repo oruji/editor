@@ -8,18 +8,12 @@
 	src: url("../font/B Nazanin.ttf") format("truetype");
 }
 
-body {
-	font-family: onazanin, cursive, tahoma;
-	text-align: right;
-}
-
-footer {
-	font-family: cursive, tahoma;
-	font-size: 10pt
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: otitr, cursive, tahoma;
+textarea {
+	width: 670px;
+	height: 150px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .icon {
@@ -29,10 +23,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .center {
 	float: right;
-}
-
-.change-lang {
-	float: left;
 }
 
 .myEmail {
@@ -47,21 +37,23 @@ h1, h2, h3, h4, h5, h6 {
 	text-align: left;
 }
 
-.engNumber {
-	font-family: cursive, tahoma;
-}
-
 .leftInline {
 	direction: ltr;
-	font-family: cursive, tahoma;
 }
 
 .leftBlock {
 	direction: ltr;
-	font-family: cursive, tahoma;
 	text-align: left;
 }
 
 [contenteditable="true"] {
 	background-color: white;
+}
+
+.radius5 {
+	border-radius: 5px;
+}
+
+.change-lang {
+	float: left;
 }

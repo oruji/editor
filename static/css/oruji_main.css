@@ -5,6 +5,7 @@ html {
 
 body {
 	background-color: white;
+	font-family: tahoma;
 	font-size: 12pt;
 	width: 900px;
 	margin: 0 auto;
@@ -12,9 +13,92 @@ body {
 	line-height: 20pt;
 }
 
+header {
+	min-height: 60px;
+	color: white;
+	margin: 2px;
+	padding: 13px;
+	font-size: 10pt;
+}
+
+footer {
+	text-align: center;
+	clear: both;
+	color: white;
+	margin: 2px;
+	padding: 30px;
+	font-size: 10pt;
+}
+
+nav {
+	width: 160px;
+	float: left;
+	line-height: 25px;
+	margin: 2px;
+	padding: 14px;
+	font-size: 11pt;
+}
+
 div {
 	padding: 0px;
 	margin: 0px;
+}
+
+p {
+	line-height: 30px;
+}
+
+hr {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+
+li {
+	padding: 5px;
+	line-height: 30px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	font-family: otitr, tahoma;
+}
+
+h1 {
+	margin-bottom: 20px;
+	margin-top: 20px;
+	font-size: 20pt;
+}
+
+h2 {
+	font-size: 17pt;
+}
+
+h3 {
+	font-size: 15pt;
+}
+
+h4 {
+	font-size: 13pt;
+}
+
+h5 {
+	font-size: 12pt;
+}
+
+pre {
+	direction: ltr;
+	text-align: left;
+	font-family: "Courier New", Courier, mono, serif;
+	font-size: 10pt;
+	background-color: #BED9DD;
+	padding: 8px;
+	color: black;
+	border-radius: 5px;
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word;
 }
 
 a {
@@ -26,9 +110,8 @@ a.content {
 	color: #00185E;
 }
 
-hr {
-	margin-bottom: 15px;
-	margin-top: 15px;
+img:hover {
+	opacity: 0.8;
 }
 
 .gradient {
@@ -41,30 +124,6 @@ hr {
 	border-top-right-radius: 7px;
 	border-bottom-right-radius: 7px;
 	border-bottom-left-radius: 7px;
-}
-
-header {
-	min-height: 60px;
-	color: white;
-	margin: 2px;
-	padding: 13px;
-}
-
-footer {
-	text-align: center;
-	clear: both;
-	color: white;
-	margin: 2px;
-	padding: 30px;
-	font-size: 11pt;
-}
-
-nav {
-	width: 160px;
-	float: left;
-	line-height: 25px;
-	margin: 2px;
-	padding: 14px;
 }
 
 .center {
@@ -93,10 +152,6 @@ nav {
 	cursor: pointer;
 }
 
-img:hover {
-	opacity: 0.8;
-}
-
 .speed {
 	-webkit-transition: all 0.8s ease;
 	-moz-transition: all 0.8s ease;
@@ -113,12 +168,6 @@ img:hover {
 	transform: rotate(360deg);
 }
 
-li {
-	padding: 5px;
-	line-height: 30px;
-	font-size: 12pt;
-}
-
 .icon {
 	padding-top: 9px;
 	padding-buttom: 0px;
@@ -127,54 +176,16 @@ li {
 	height: 106px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	margin: 0;
-}
-
-h1 {
-	margin-bottom: 20px;
-	margin-top: 20px;
-	font-size: 20pt;
-}
-
-pre {
-	direction: ltr;
-	text-align: left;
-	font-family: "Courier New", Courier, mono, serif;
-	font-size: 10pt;
-	background-color: #BED9DD;
-	padding: 8px;
-	color: black;
-	border-radius: 5px;
-	white-space: pre-wrap; /* css-3 */
-	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-	white-space: -pre-wrap; /* Opera 4-6 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word;
-}
-
-p {
-	font-size: 14pt;
-	line-height: 30px;
-}
-
-li {
-	font-size: 14pt;
-	line-height: 30px;
-}
-
 .collapse {
 	background-image: url('/statics/img/collapse.png');
 	background-repeat: no-repeat;
 	background-position: 0px center;
-	font-size: 14pt;
 }
 
 .expand {
 	background-image: url('/statics/img/expand.png');
 	background-repeat: no-repeat;
 	background-position: 0px center;
-	font-size: 14pt;
 }
 
 .oruji-ul {
@@ -197,16 +208,6 @@ li {
 	color: white;
 	font-weight: bold;
 	font-size: 25pt;
-}
-
-.change-lang {
-	margin-top: -40px;
-	background-color: #e8eeff;
-	color: #000;
-	border-radius: 3px;
-	padding-right: 7px;
-	padding-left: 7px;
-	font-size: 10pt;
 }
 
 #skillsToggle {
@@ -238,14 +239,12 @@ li {
 
 .index {
 	padding: 10px;
-	font-size: 14pt;
 }
 
 .index-style {
 	background-color: #BED9DD;
 	border-radius: 4px;
 	padding: 10px;
-	font-size: 14pt;
 }
 
 #aminToggle {
@@ -290,29 +289,25 @@ li {
 	margin-bottom: -10px;
 }
 
-.skillsLi {
-	font-size: 12pt;
-}
-
 .padb20 {
 	padding-bottom: 20px;
 }
 
-.myName {
-	font-size: 20pt;
+.myError {
+	margin-bottom: 10px;
+	margin-top: 5px;
+	color: red
 }
 
-.mySemat {
+.change-lang {
+	margin-top: -40px;
+	background-color: #e8eeff;
+	color: #000;
+	border-radius: 3px;
+	padding-right: 7px;
+	padding-left: 7px;
+}
+
+.headerSize {
 	font-size: 13pt;
-}
-
-.myH3 {
-	font-size: 12pt;
-}
-
-textarea {
-	width: 640px;
-	height: 150px;
-	font-size: 14pt;
-	font-family: onazanin, cursive, tahoma;
 }
