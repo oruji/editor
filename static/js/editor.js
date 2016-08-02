@@ -5,6 +5,10 @@ if (getQueryStrings()['edit'] == "true") {
 
 	// click on element
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, ul, ol", function() {
+		if (hasChanges(currentElement))
+			if (confirm('تغییرات را ذخیره میکنید؟'))
+				currentElement.html($('#editText').val());
+		
 		currentElement = $(this);
 		renewTempTags(currentElement);
 		
@@ -17,6 +21,10 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#newButton", function() {
+		if (hasChanges(currentElement))
+			if (confirm('تغییرات را ذخیره میکنید؟'))
+				currentElement.html($('#editText').val());
+		
 		var newElement = $("<p>new Element!</p>");
 		currentElement.after(newElement);
 		
@@ -27,7 +35,7 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#removeButton", function() {
-		currentElement.remove();
+		currentElement = undefined;
 		
 		removeTempTags();
 	});
@@ -43,6 +51,10 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#downloadButton", function() {
+		if (hasChanges(currentElement))
+			if (confirm('تغییرات را ذخیره میکنید؟'))
+				currentElement.html($('#editText').val());
+		
 		removeTempTags();
 		
 		var myContent = $(".center").html();
@@ -50,6 +62,10 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#closeButton", function() {
+		if (hasChanges(currentElement))
+			if (confirm('تغییرات را ذخیره میکنید؟'))
+				currentElement.html($('#editText').val());
+		
 		removeTempTags();
 	});
 
@@ -76,11 +92,11 @@ if (getQueryStrings()['edit'] == "true") {
 		removeAttr($("#editText"), "dir", "ltr");
 		removeAttr($("#editText"), "dir", "rtl");
 		
-		if (this.value == "PRE") {
+		if (this.value == "PRE")
 			$("#editText").attr("dir", "ltr");
-		} else {
+			
+		else
 			$("#editText").attr("dir", "rtl");
-		}
 	});
 }
 });
@@ -223,10 +239,14 @@ function renewTempTags(currentElement) {
 		currentElement.after($("<textarea dir=\"ltr\" id=\"editText\"></textarea>"));
 	else
 		currentElement.after($("<textarea id=\"editText\"></textarea>"));
-
+	
 	if ($('#saveButton').length)
 		$('#saveButton').remove();
 	currentElement.after($("<button id=\"saveButton\">save</button>"));
+	
+	if ($('#closeButton').length)
+		$('#closeButton').remove();
+	currentElement.after($("<button id=\"closeButton\">close</button>"));
 	
 	if ($('#newButton').length)
 		$('#newButton').remove();
@@ -235,7 +255,11 @@ function renewTempTags(currentElement) {
 	if ($('#removeButton').length)
 		$('#removeButton').remove();
 	currentElement.after($("<button id=\"removeButton\">remove</button>"));
-		
+	
+	if ($('#downloadButton').length)
+		$('#downloadButton').remove();
+	currentElement.after($("<button id=\"downloadButton\">download</button>"));
+	
 	if ($('#ltrButton').length)
 		$('#ltrButton').remove();
 	currentElement.after($("<button id=\"ltrButton\">ltr</button>"));
@@ -243,14 +267,6 @@ function renewTempTags(currentElement) {
 	if ($('#boldButton').length)
 		$('#boldButton').remove();
 	currentElement.after($("<button id=\"boldButton\">bold</button>"));
-	
-	if ($('#downloadButton').length)
-		$('#downloadButton').remove();
-	currentElement.after($("<button id=\"downloadButton\">download</button>"));
-
-	if ($('#closeButton').length)
-		$('#closeButton').remove();
-	currentElement.after($("<button id=\"closeButton\">close</button>"));
 
 	if ($('#dl').length)
 		$('#dl').remove();
@@ -275,4 +291,13 @@ function removeAttr(currentElement, myAttrKey, myAttrVal) {
 	}
 	
 	return currentElement;
+}
+
+function hasChanges(currentElement) {
+	if (typeof currentElement != typeof undefined)
+		if ($("#editText").length)
+			if (currentElement.html() != $("#editText").val())
+				return true;
+
+	return false;
 }
