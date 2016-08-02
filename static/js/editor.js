@@ -14,8 +14,6 @@ if (getQueryStrings()['edit'] == "true") {
 	// save changes
 	$(document).on("click", "#saveButton", function() {
 		currentElement.html($('#editText').val());
-
-		removeTempTags();
 	});
 
 	$(document).on("click", "#newButton", function() {
@@ -47,7 +45,7 @@ if (getQueryStrings()['edit'] == "true") {
 		download("index.html", myContent);
 	});
 
-	$(document).on("click", "#cancelButton", function() {
+	$(document).on("click", "#closeButton", function() {
 		removeTempTags();
 	});
 
@@ -206,7 +204,7 @@ function removeTempTags() {
 	$('#ltrButton').remove();
 	$('#downloadButton').remove();
 	$('#boldButton').remove();
-	$('#cancelButton').remove();
+	$('#closeButton').remove();
 	$('#tagType').remove();
 	$('#dl').remove();
 	$('#dr').remove();
@@ -244,9 +242,9 @@ function renewTempTags(currentElement) {
 		$('#downloadButton').remove();
 	currentElement.after($("<button id=\"downloadButton\">download</button>"));
 
-	if ($('#cancelButton').length)
-		$('#cancelButton').remove();
-	currentElement.after($("<button id=\"cancelButton\">cancel</button>"));
+	if ($('#closeButton').length)
+		$('#closeButton').remove();
+	currentElement.after($("<button id=\"closeButton\">close</button>"));
 
 	if ($('#dl').length)
 		$('#dl').remove();
