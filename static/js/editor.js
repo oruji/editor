@@ -17,9 +17,13 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#newButton", function() {
-		currentElement.after($("<p>new Element!</p>"));
+		var newElement = $("<p>new Element!</p>");
+		currentElement.after(newElement);
 		
-		removeTempTags();
+		currentElement = newElement;
+		renewTempTags(currentElement);
+		
+		$('#editText').val(currentElement.html());
 	});
 
 	$(document).on("click", "#removeButton", function() {
@@ -68,12 +72,14 @@ if (getQueryStrings()['edit'] == "true") {
 		currentElement.after(newElement);
 		currentElement.remove();
 		currentElement = newElement;
+
+		removeAttr($("#editText"), "dir", "ltr");
+		removeAttr($("#editText"), "dir", "rtl");
 		
-		if(this.value == "PRE") {
-			removeAttr($("#editText"), "dir", "ltr");
-			removeAttr($("#editText"), "dir", "rtl");
-			
+		if (this.value == "PRE") {
 			$("#editText").attr("dir", "ltr");
+		} else {
+			$("#editText").attr("dir", "rtl");
 		}
 	});
 }
