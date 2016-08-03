@@ -7,31 +7,39 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, ul, ol", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				currentElement.html($('#editText').val());
-		
+				saveChanges(currentElement);
+
 		currentElement = $(this);
 		renewTempTags(currentElement);
 		
-		$('#editText').val(currentElement.html());
+		readCurrent(currentElement);
 	});
 
 	// save changes
 	$(document).on("click", "#saveButton", function() {
-		currentElement.html($('#editText').val());
+		saveChanges(currentElement);
+	});
+
+	$(document).on("click", "#closeButton", function() {
+		if (hasChanges(currentElement))
+			if (confirm('تغییرات را ذخیره میکنید؟'))
+				saveChanges(currentElement)
+
+		removeTempTags();
 	});
 
 	$(document).on("click", "#newButton", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				currentElement.html($('#editText').val());
+				saveChanges(currentElement)
 		
 		var newElement = $("<p>new Element!</p>");
 		currentElement.after(newElement);
 		
 		currentElement = newElement;
 		renewTempTags(currentElement);
-		
-		$('#editText').val(currentElement.html());
+	
+		readCurrent(currentElement);
 	});
 
 	$(document).on("click", "#removeButton", function() {
@@ -54,20 +62,12 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "#downloadButton", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				currentElement.html($('#editText').val());
+				saveChanges(currentElement)
 		
 		removeTempTags();
 		
 		var myContent = $(".center").html();
-		download("index.html", myContent);
-	});
-
-	$(document).on("click", "#closeButton", function() {
-		if (hasChanges(currentElement))
-			if (confirm('تغییرات را ذخیره میکنید؟'))
-				currentElement.html($('#editText').val());
-		
-		removeTempTags();
+		download("index.html", trimNewLines(myContent));
 	});
 
 	$(document).on("click", "#dl", function() {
@@ -297,8 +297,52 @@ function removeAttr(currentElement, myAttrKey, myAttrVal) {
 function hasChanges(currentElement) {
 	if (typeof currentElement != typeof undefined)
 		if ($("#editText").length)
-			if (currentElement.html() != $("#editText").val())
+			if (deformat(currentElement.html()) != deformat($("#editText").val()))
 				return true;
 
 	return false;
+}
+
+function format(myInput) {
+	// remove newlines
+	myInput = myInput.split(">\n").join(">");
+	myInput = myInput.split("\n<").join("<");
+	
+	// add newline
+	myInput = myInput.split(">").join(">\n");
+	myInput = myInput.split("<").join("\n<");
+	myInput = removeExtraNewLines(myInput);
+	
+	return myInput;
+}
+
+function deformat(myInput) {
+	myInput = myInput.split(">\n").join(">")
+	myInput = myInput.split("\n<").join("<")
+	
+	return myInput;
+}
+
+function removeExtraNewLines(myInput) {
+	myInput = myInput.split("\n\n").join("\n");
+	
+	return trimNewLines(myInput);
+}
+
+function trimNewLines(myInput) {
+	if (myInput.charAt(0) == "\n")
+		myInput = myInput.substring(1);
+	
+	if (myInput.charAt(myInput.length - 1) == "\n")
+		myInput = myInput.substring(0, myInput.length - 1)
+		
+	return myInput;
+}
+
+function saveChanges(currentElement) {
+	currentElement.html(deformat($('#editText').val()));
+}
+
+function readCurrent(currentElement) {
+	$("#editText").val(format(currentElement.html()));
 }
