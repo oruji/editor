@@ -67,7 +67,12 @@ if (getQueryStrings()['edit'] == "true") {
 		removeTempTags();
 		
 		var myContent = $(".center").html();
-		download("index.html", trimNewLines(myContent));
+		
+		for (i = 1; i <= 5; i++) {
+			myContent = myContent.split("\n<").join("<");
+			myContent = myContent.split(">\n").join(">");
+		}
+		download("index.html", trimLine(myContent));
 	});
 	
 	$(document).on("change", "#tagType", function() {
@@ -283,39 +288,20 @@ function removeAttr(currentElement, myAttrKey, myAttrVal) {
 function hasChanges(currentElement) {
 	if (typeof currentElement != typeof undefined)
 		if ($("#editText").length)
-			if (deformat(currentElement.html()) != deformat($("#editText").val()))
+			if (currentElement.html() != $("#editText").val())
 				return true;
 
 	return false;
 }
 
-function format(myInput) {
-	// remove newlines
-	myInput = myInput.split(">\n").join(">");
-	myInput = myInput.split("\n<").join("<");
-	
-	// add newline
-	myInput = myInput.split(">").join(">\n");
-	myInput = myInput.split("<").join("\n<");
-	myInput = removeExtraNewLines(myInput);
-	
-	return myInput;
-}
-
-function deformat(myInput) {
-	myInput = myInput.split(">\n").join(">")
-	myInput = myInput.split("\n<").join("<")
-	
-	return myInput;
-}
 
 function removeExtraNewLines(myInput) {
 	myInput = myInput.split("\n\n").join("\n");
 	
-	return trimNewLines(myInput);
+	return trimLine(myInput);
 }
 
-function trimNewLines(myInput) {
+function trimLine(myInput) {
 	if (myInput.charAt(0) == "\n")
 		myInput = myInput.substring(1);
 
@@ -326,18 +312,14 @@ function trimNewLines(myInput) {
 }
 
 function saveCurrent(currentElement) {
-	
-	if (currentElement.prop("tagName") != "PRE")
-		$('#editText').val($('#editText').val().split("\n").join(""));
-	
-	currentElement.html(deformat($('#editText').val()));
+	currentElement.html($('#editText').val());
 }
 
 function readCurrent(currentElement) {
-	$("#editText").val(format(currentElement.html()));
+	$("#editText").val(currentElement.html());
 }
 
 function readCurrentForInline(currentElement) {
 	// I don't know why?! but it works for inline!
-	$('#editText').val(currentElement.html(format(currentElement.html())).html());
+	$('#editText').val(currentElement.html(currentElement.html()).html());
 }
