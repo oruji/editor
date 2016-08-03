@@ -5,34 +5,17 @@ if (getQueryStrings()['edit'] == "true") {
 
 	// click on element
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, ul, ol", function() {
-		if (hasChanges(currentElement))
-			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveCurrent(currentElement);
-
 		currentElement = $(this);
 		renewTempTags(currentElement);
 		
 		readCurrent(currentElement);
 	});
 
-	// save changes
-	$(document).on("click", "#saveButton", function() {
-		saveCurrent(currentElement);
-	});
-
 	$(document).on("click", "#closeButton", function() {
-		if (hasChanges(currentElement))
-			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveCurrent(currentElement)
-
 		removeTempTags();
 	});
 
 	$(document).on("click", "#newButton", function() {
-		if (hasChanges(currentElement))
-			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveCurrent(currentElement)
-		
 		var newElement = $("<p>new Element!</p>");
 		currentElement.after(newElement);
 		
@@ -60,10 +43,6 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#downloadButton", function() {
-		if (hasChanges(currentElement))
-			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveCurrent(currentElement)
-		
 		removeTempTags();
 		
 		var myContent = $(".center").html();
@@ -89,6 +68,14 @@ if (getQueryStrings()['edit'] == "true") {
 			
 		else
 			$("#editText").attr("dir", "rtl");
+	});
+	
+	$(document).on("keydown", "#editText", function() {
+		saveCurrent(currentElement);
+	});
+	
+	$(document).on("keyup", "#editText", function() {
+		saveCurrent(currentElement);
 	});
 }
 });
@@ -211,7 +198,6 @@ function clearSelection() {
 }
 
 function removeTempTags() {
-	$('#saveButton').remove();
 	$('#editText').remove();
 	$('#newButton').remove();
 	$('#removeButton').remove();
@@ -231,11 +217,6 @@ function renewTempTags(currentElement) {
 	
 	else
 		currentElement.after($("<textarea id=\"editText\"></textarea>"));
-	
-	if ($('#saveButton').length)
-		$('#saveButton').remove();
-	
-	currentElement.after($("<button id=\"saveButton\">save</button>"));
 	
 	if ($('#closeButton').length)
 		$('#closeButton').remove();
