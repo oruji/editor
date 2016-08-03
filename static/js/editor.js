@@ -69,20 +69,6 @@ if (getQueryStrings()['edit'] == "true") {
 		var myContent = $(".center").html();
 		download("index.html", trimNewLines(myContent));
 	});
-
-	$(document).on("click", "#dl", function() {
-		removeAttr($("#editText"), "dir", "ltr");
-		removeAttr($("#editText"), "dir", "rtl");
-		
-		$("#editText").attr("dir", "ltr");
-	});
-	
-	$(document).on("click", "#dr", function() {
-		removeAttr($("#editText"), "dir", "ltr");
-		removeAttr($("#editText"), "dir", "rtl");
-		
-		$("#editText").attr("dir", "rtl");
-	});
 	
 	$(document).on("change", "#tagType", function() {
 		var newElement = $("<" + this.value + ">" + currentElement.html() + "</" + this.value + ">");
@@ -229,8 +215,6 @@ function removeTempTags() {
 	$('#boldButton').remove();
 	$('#closeButton').remove();
 	$('#tagType').remove();
-	$('#dl').remove();
-	$('#dr').remove();
 }
 
 function renewTempTags(currentElement) {
@@ -268,14 +252,6 @@ function renewTempTags(currentElement) {
 	if ($('#boldButton').length)
 		$('#boldButton').remove();
 	currentElement.after($("<button id=\"boldButton\">bold</button>"));
-
-	if ($('#dl').length)
-		$('#dl').remove();
-	currentElement.after($("<button id=\"dl\">dl</button>"));
-	
-	if ($('#dr').length)
-		$('#dr').remove();
-	currentElement.after($("<button id=\"dr\">dr</button>"));
 	
 	if ($('#tagType').length)
 		$('#tagType').remove();
