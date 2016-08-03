@@ -35,6 +35,7 @@ if (getQueryStrings()['edit'] == "true") {
 	});
 
 	$(document).on("click", "#removeButton", function() {
+		currentElement.remove();
 		currentElement = undefined;
 		
 		removeTempTags();
