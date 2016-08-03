@@ -51,12 +51,12 @@ if (getQueryStrings()['edit'] == "true") {
 
 	$(document).on("click", "#ltrButton", function() {
 		surroundSelection(this.id);
-		$('#editText').val(currentElement.html(currentElement.html()).html());
+		readCurrentForInline(currentElement);
 	});
 
 	$(document).on("click", "#boldButton", function() {
 		surroundSelection(this.id);
-		$('#editText').val(currentElement.html(currentElement.html()).html());
+		readCurrentForInline(currentElement);
 	});
 
 	$(document).on("click", "#downloadButton", function() {
@@ -326,9 +326,18 @@ function trimNewLines(myInput) {
 }
 
 function saveCurrent(currentElement) {
+	
+	if (currentElement.prop("tagName") != "PRE")
+		$('#editText').val($('#editText').val().split("\n").join(""));
+	
 	currentElement.html(deformat($('#editText').val()));
 }
 
 function readCurrent(currentElement) {
 	$("#editText").val(format(currentElement.html()));
+}
+
+function readCurrentForInline(currentElement) {
+	// I don't know why?! but it works for inline!
+	$('#editText').val(currentElement.html(format(currentElement.html())).html());
 }
