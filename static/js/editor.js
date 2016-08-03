@@ -7,7 +7,7 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "p, h1, h2, h3, h4, h5, pre, ul, ol", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveChanges(currentElement);
+				saveCurrent(currentElement);
 
 		currentElement = $(this);
 		renewTempTags(currentElement);
@@ -17,13 +17,13 @@ if (getQueryStrings()['edit'] == "true") {
 
 	// save changes
 	$(document).on("click", "#saveButton", function() {
-		saveChanges(currentElement);
+		saveCurrent(currentElement);
 	});
 
 	$(document).on("click", "#closeButton", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveChanges(currentElement)
+				saveCurrent(currentElement)
 
 		removeTempTags();
 	});
@@ -31,7 +31,7 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "#newButton", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveChanges(currentElement)
+				saveCurrent(currentElement)
 		
 		var newElement = $("<p>new Element!</p>");
 		currentElement.after(newElement);
@@ -62,7 +62,7 @@ if (getQueryStrings()['edit'] == "true") {
 	$(document).on("click", "#downloadButton", function() {
 		if (hasChanges(currentElement))
 			if (confirm('تغییرات را ذخیره میکنید؟'))
-				saveChanges(currentElement)
+				saveCurrent(currentElement)
 		
 		removeTempTags();
 		
@@ -220,41 +220,51 @@ function removeTempTags() {
 function renewTempTags(currentElement) {
 	if ($('#editText').length)
 		$('#editText').remove();
+	
 	if (currentElement.prop("tagName") == "PRE")
 		currentElement.after($("<textarea dir=\"ltr\" id=\"editText\"></textarea>"));
+	
 	else
 		currentElement.after($("<textarea id=\"editText\"></textarea>"));
 	
 	if ($('#saveButton').length)
 		$('#saveButton').remove();
+	
 	currentElement.after($("<button id=\"saveButton\">save</button>"));
 	
 	if ($('#closeButton').length)
 		$('#closeButton').remove();
+	
 	currentElement.after($("<button id=\"closeButton\">close</button>"));
 	
 	if ($('#newButton').length)
 		$('#newButton').remove();
+	
 	currentElement.after($("<button id=\"newButton\">new</button>"));
 	
 	if ($('#removeButton').length)
 		$('#removeButton').remove();
+	
 	currentElement.after($("<button id=\"removeButton\">remove</button>"));
 	
 	if ($('#downloadButton').length)
 		$('#downloadButton').remove();
+	
 	currentElement.after($("<button id=\"downloadButton\">download</button>"));
 	
 	if ($('#ltrButton').length)
 		$('#ltrButton').remove();
+	
 	currentElement.after($("<button id=\"ltrButton\">ltr</button>"));
 			
 	if ($('#boldButton').length)
 		$('#boldButton').remove();
+	
 	currentElement.after($("<button id=\"boldButton\">bold</button>"));
 	
 	if ($('#tagType').length)
 		$('#tagType').remove();
+	
 	var mySelect = $("<select id='tagType'><option value='P'>P</option><option value='H1'>H1</option><option value='H2'>H2</option><option value='H3'>H3</option><option value='H4'>H4</option><option value='PRE'>PRE</option><option value='UL'>UL</option><option value='OL'>OL</option></select>");
 	currentElement.after(mySelect.val(currentElement.prop("tagName")));
 }
@@ -308,14 +318,14 @@ function removeExtraNewLines(myInput) {
 function trimNewLines(myInput) {
 	if (myInput.charAt(0) == "\n")
 		myInput = myInput.substring(1);
-	
+
 	if (myInput.charAt(myInput.length - 1) == "\n")
 		myInput = myInput.substring(0, myInput.length - 1)
 		
 	return myInput;
 }
 
-function saveChanges(currentElement) {
+function saveCurrent(currentElement) {
 	currentElement.html(deformat($('#editText').val()));
 }
 
